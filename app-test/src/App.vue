@@ -3,7 +3,7 @@
   <!-- <MyComponent test="Hello By NetKTS" />
   <HelloWorld msg="Welcome to Your Vue.js App"/> -->
   <employee-form @add:EmployeeBtn="addEmployee" :employeeForEdit="employeeForEditInApp" :isEdit="isEditInApp" @editInForm:Employee="EditInApp" />
-  <Lesson_6 :employees="employeesInApp" @delete:employeeBtn="deleteEmployee" @edit:employeeBtn="editEmployee" @send:Employee="editInForm"/>
+  <Lesson_6 :employees="employeesInApp" @delete:employeeBtn="deleteEmployee" @send:Employee="SendToForm"/>
   <!-- <br>
   {{employeesInApp}} -->
 </template>
@@ -61,17 +61,7 @@ export default {
     deleteEmployee(employee){
       this.employeesInApp = this.employeesInApp.filter((em) => em.id !== employee.id)
     },
-    editEmployee(employee){
-      console.log("Edit in App.vue");
-      console.log(employee);
-      this.employeesInApp = this.employeesInApp.map((em) => {
-        if(em.id == employee.id){
-          em.name = employee.name;
-          em.email = employee.email;
-        }
-        return em
-      })
-    },
+    
     findNewId(allEmployee){
       var theMostId = 0;
       allEmployee.forEach((em)=>{
@@ -81,7 +71,7 @@ export default {
       });
       return theMostId + 1;
     },
-    editInForm(employee){
+    SendToForm(employee){
       this.employeeForEditInApp.id = employee.id;
       this.employeeForEditInApp.name = employee.name;
       this.employeeForEditInApp.email = employee.email;

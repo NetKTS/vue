@@ -43,28 +43,28 @@ export default {
         }
     },
     methods:{
-        editEmployee(employee){
-            if(document.getElementById('EditBtn'+employee.id).textContent == "edit"){
-                document.getElementById('name'+employee.id).disabled = false;
-                document.getElementById('email'+employee.id).disabled = false;
-                document.getElementById('EditBtn'+employee.id).textContent = "save";
-                this.editModeId = employee.id;
-            }
-            else{
-                this.$emit('edit:employeeBtn',employee);
-                document.getElementById('name'+employee.id).disabled = true;
-                document.getElementById('email'+employee.id).disabled = true;
-                document.getElementById('EditBtn'+employee.id).textContent = "edit";
-                console.log("save");
-                this.editModeId = false;
-            }
-        },
-        cancleSave(employeeId){
-            document.getElementById('name'+employeeId).disabled = true;
-            document.getElementById('email'+employeeId).disabled = true;
-            document.getElementById('EditBtn'+employeeId).textContent = "edit";
-            this.editModeId = false;
-        },
+        // editEmployee(employee){
+        //     if(document.getElementById('EditBtn'+employee.id).textContent == "edit"){
+        //         document.getElementById('name'+employee.id).disabled = false;
+        //         document.getElementById('email'+employee.id).disabled = false;
+        //         document.getElementById('EditBtn'+employee.id).textContent = "save";
+        //         this.editModeId = employee.id;
+        //     }
+        //     else{
+        //         this.$emit('edit:employeeBtn',employee);
+        //         document.getElementById('name'+employee.id).disabled = true;
+        //         document.getElementById('email'+employee.id).disabled = true;
+        //         document.getElementById('EditBtn'+employee.id).textContent = "edit";
+        //         console.log("save");
+        //         this.editModeId = false;
+        //     }
+        // },
+        // cancleSave(employeeId){
+        //     document.getElementById('name'+employeeId).disabled = true;
+        //     document.getElementById('email'+employeeId).disabled = true;
+        //     document.getElementById('EditBtn'+employeeId).textContent = "edit";
+        //     this.editModeId = false;
+        // },
         sendEmployeeToEdit(employee){
             this.$emit('send:Employee',employee);
         }
