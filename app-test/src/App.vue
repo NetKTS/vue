@@ -2,8 +2,10 @@
   <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
   <!-- <MyComponent test="Hello By NetKTS" />
   <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-  <employee-form @add:EmployeeBtn="addEmployee"/>
-  <Lesson_6 :employees="employees" />
+  <employee-form @add:EmployeeBtn="addEmployee" :employeeForEdit="employeeForEditInApp" :isEdit="isEditInApp" @editInForm:Employee="EditInApp" />
+  <Lesson_6 :employees="employeesInApp" @delete:employeeBtn="deleteEmployee" @edit:employeeBtn="editEmployee" @send:Employee="editInForm"/>
+  <!-- <br>
+  {{employeesInApp}} -->
 </template>
 
 <script>
@@ -23,7 +25,7 @@ export default {
   },
   data(){
     return{
-      employees:[
+      employeesInApp:[
           {
               id:1,
               name:'Richard Hendricks',
@@ -39,18 +41,63 @@ export default {
               name:'Kittisak Thamwattana',
               email:'kittisak@email.com'
           }
-      ]
+      ],
+      employeeForEditInApp:{
+        id:0,
+        name:'s',
+        email:'ss',
+      },
+      isEditInApp:false
             
     }
   },
   methods:{
     addEmployee(employee){
       const newEmployee = {
-        id: this.employees.length + 1,
+        id: this.findNewId(this.employeesInApp),
         name: employee.name,
         email: employee.email
       }
-      this.employees.push(newEmployee);
+      this.employeesInApp.push(newEmployee);
+    },
+    deleteEmployee(employee){
+      this.employeesInApp = this.employeesInApp.filter((em) => em.id !== employee.id)
+    },
+    editEmployee(employee){
+      console.log("Edit in App.vue");
+      console.log(employee);
+      this.employeesInApp = this.employeesInApp.map((em) => {
+        if(em.id == employee.id){
+          em.name = employee.name;
+          em.email = employee.email;
+        }
+        return em
+      })
+    },
+    findNewId(allEmployee){
+      var theMostId = 0;
+      allEmployee.forEach((em)=>{
+        if(em.id > theMostId){
+          theMostId = em.id;
+        }
+      });
+      return theMostId + 1;
+    },
+    editInForm(employee){
+      this.employeeForEditInApp.id = employee.id;
+      this.employeeForEditInApp.name = employee.name;
+      this.employeeForEditInApp.email = employee.email;
+      this.isEditInApp = true;
+      console.log(this.employeeForEditInApp);
+    },
+    EditInApp(employee){
+      this.employeesInApp = this.employeesInApp.forEach((em)=>{
+        if(em.id == employee.id){
+          em.name = employee.name;
+          em.email = employee.email;
+        }
+        return em
+      })
     }
   }
 }
