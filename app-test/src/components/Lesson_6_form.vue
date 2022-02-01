@@ -9,13 +9,13 @@
       <button>Add Employee</button>
   </form>
 
-  <form v-if="isEdit" @submit.prevent="EditEmployeeBtn">
+  <form v-if="isEdit" @submit.prevent="">
       <label >Employee name</label><br>
       <input id="EditName" :value="employeeForEdit.name" type="text"><br>
       <label >Employee email</label><br>
       <input id="EditEmail" :value="employeeForEdit.email" type="text"><br>
       <button @click="EditEmployeeBtn()">save</button>
-      <button>cancle</button>
+      <button @click="cancleBtn()">cancle</button>
   </form>
 </template>
 
@@ -53,7 +53,11 @@ export default {
             this.$emit('editInForm:Employee',edit)
             document.getElementById("EditName").value = "";
             document.getElementById("EditEmail").value = "";
-
+        },
+        cancleBtn(){
+            document.getElementById("EditName").value = "";
+            document.getElementById("EditEmail").value = "";
+            this.$emit('cancle')
         }
     }
     

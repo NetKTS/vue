@@ -2,7 +2,7 @@
   <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
   <!-- <MyComponent test="Hello By NetKTS" />
   <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-  <employee-form @add:EmployeeBtn="addEmployee" :employeeForEdit="employeeForEditInApp" :isEdit="isEditInApp" @editInForm:Employee="EditInApp" />
+  <employee-form @add:EmployeeBtn="addEmployee" :employeeForEdit="employeeForEditInApp" :isEdit="isEditInApp" @editInForm:Employee="EditInApp" @cancle="cancleBth" />
   <Lesson_6 :employees="employeesInApp" @delete:employeeBtn="deleteEmployee" @send:Employee="SendToForm"/>
   <!-- <br>
   {{employeesInApp}} -->
@@ -84,6 +84,9 @@ export default {
           em.email = employee.email;
         }
       })
+      this.isEditInApp = false;
+    },
+    cancleBth(){
       this.isEditInApp = false;
     }
   }
