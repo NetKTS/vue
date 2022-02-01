@@ -43,9 +43,7 @@ export default {
           }
       ],
       employeeForEditInApp:{
-        id:0,
-        name:'s',
-        email:'ss',
+        
       },
       isEditInApp:false
             
@@ -91,13 +89,15 @@ export default {
       console.log(this.employeeForEditInApp);
     },
     EditInApp(employee){
-      this.employeesInApp = this.employeesInApp.forEach((em)=>{
+      this.employeesInApp.forEach(em =>{
         if(em.id == employee.id){
           em.name = employee.name;
           em.email = employee.email;
         }
-        return em
       })
+      this.isEditInApp = false;
+      console.log("Edit In App")
+      console.log(employee)
     }
   }
 }

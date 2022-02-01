@@ -9,11 +9,11 @@
       <button>Add Employee</button>
   </form>
 
-  <form v-if="isEdit" >
+  <form v-if="isEdit" @submit.prevent="EditEmployeeBtn">
       <label >Employee name</label><br>
-      <input v-model="forEdit.name" type="text"><br>
+      <input id="EditName" :value="employeeForEdit.name" type="text"><br>
       <label >Employee email</label><br>
-      <input v-model="forEdit.email" type="text"><br>
+      <input id="EditEmail" :value="employeeForEdit.email" type="text"><br>
       <button @click="EditEmployeeBtn()">save</button>
       <button>cancle</button>
   </form>
@@ -44,9 +44,17 @@ export default {
             this.employee.name = ""
             this.employee.email = ""
         },
-        // EditEmployeeBtn(Em){
-        //     this.$emit('editInForm:Employee',Em)
-        // }
+        EditEmployeeBtn(){
+            const edit = {
+                id:this.employeeForEdit.id,
+                name: document.getElementById("EditName").value,
+                email: document.getElementById("EditEmail").value
+            }
+            this.$emit('editInForm:Employee',edit)
+            document.getElementById("EditName").value = "";
+            document.getElementById("EditEmail").value = "";
+
+        }
     }
     
 }
