@@ -49,17 +49,50 @@ export default {
             
     }
   },
+  mounted(){
+    this.getEmployees()
+  },
   methods:{
-    addEmployee(employee){
+    async getEmployees(){
+      try {
+        const response = await fetch("http://localhost:3000/parking")
+        const data = await response.json();
+        this.employeesInApp = data.data;
+        console.log(data.data)
+      } catch (error) {
+        console.log("Error")
+      }
+    },
+    async addEmployee(employee){
       const newEmployee = {
         id: this.findNewId(this.employeesInApp),
         name: employee.name,
-        email: employee.email
+        description: employee.description
       }
       this.employeesInApp.push(newEmployee);
+      const response = await fetch("http://localhost:3000/parking/add",{
+        method:'POST',
+        mode:'cors',
+        headers:{
+          'Content-Type': 'application/json'
+        },
+        body:JSON.stringify(newEmployee)
+        
+      })
+      return response.json()
     },
-    deleteEmployee(employee){
+    async deleteEmployee(employee){
       this.employeesInApp = this.employeesInApp.filter((em) => em.id !== employee.id)
+      const response = await fetch(`http://localhost:3000/parking/delete/${employee.id}`,{
+        method:'DELETE',
+        mode:'cors',
+        headers:{
+          'Content-Type': 'application/json'
+        },
+        // body:JSON.stringify(employee.id)
+        
+      })
+      return response.json()
     },
     
     findNewId(allEmployee){
@@ -74,17 +107,27 @@ export default {
     SendToForm(employee){
       this.employeeForEditInApp.id = employee.id;
       this.employeeForEditInApp.name = employee.name;
-      this.employeeForEditInApp.email = employee.email;
+      this.employeeForEditInApp.description = employee.description;
       this.isEditInApp = true;
     },
-    EditInApp(employee){
+    async EditInApp(employee){
       this.employeesInApp.forEach(em =>{
         if(em.id == employee.id){
           em.name = employee.name;
-          em.email = employee.email;
+          em.description = employee.description;
         }
       })
       this.isEditInApp = false;
+      const response = await fetch(`http://localhost:3000/parking/update/${employee.id}`,{
+        method:'PUT',
+        mode:'cors',
+        headers:{
+          'Content-Type': 'application/json'
+        },
+        body:JSON.stringify(employee)
+        
+      })
+      return response.json()
     },
     cancleBth(){
       this.isEditInApp = false;

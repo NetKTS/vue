@@ -5,8 +5,8 @@
         <table border="1">
             <thead>
                 <th>Id</th>
-                <th>employee name</th>
-                <th>employee email</th>
+                <th>name</th>
+                <th>description</th>
                 <th width="50">edit</th>
                 <th>delete</th>
             </thead>
@@ -16,7 +16,7 @@
                     <td >
                         <input type="text" :id="'name'+employee.id" disabled v-model="employee.name">
                     </td>
-                    <td><input type="text" :id="'email'+employee.id" disabled v-model="employee.email"></td>
+                    <td><input type="text" :id="'email'+employee.id" disabled v-model="employee.description"></td>
                     <td ><center><button :id="'EditBtn'+employee.id" @click="sendEmployeeToEdit(employee)">edit</button></center></td>
                     <td><center>
                         <button v-if="editModeId != employee.id" :id="'DeleteBtn'+employee.id" @click="$emit('delete:employeeBtn',employee)">delete</button>
